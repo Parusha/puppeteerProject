@@ -6,25 +6,31 @@ function recordAction(action) {
 }
 
 (async () => {
-  // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({ headless: false }); // Use headless: false to observe the process
-  const page = await browser.newPage();
-  await page.evaluate(() => {
-    Date.now = () => {
-      return 1695177600000; // Replace with your timestamp
-    };
-  });
-
-  // Record action
-  recordAction('Launching browser and opening a new page.');
-
-  // Navigate to the website
-  await page.goto('https://new.hollywoodbets.net/');
-  recordAction('Navigated to https://new.hollywoodbets.net/');
-
-  // Set the screen size
-  await page.setViewport({ width: 1080, height: 1024 });
-  recordAction('Viewport set to width 1080 and height 1024.');
+    // Launch the browser and open a new blank page, ignoring SSL certificate errors
+    const browser = await puppeteer.launch({
+      headless: false,
+      ignoreHTTPSErrors: true,  // Bypass SSL certificate errors
+      args: ['--ignore-certificate-errors'], // Additional flag to ignore certificate errors
+    });
+  
+    const page = await browser.newPage();
+    
+    await page.evaluate(() => {
+      Date.now = () => {
+        return 1695177600000; // Replace with your timestamp
+      };
+    });
+  
+    // Record action
+    recordAction('Launching browser and opening a new page.');
+  
+    // Navigate to the website
+    await page.goto('https://localhost:8080/');
+    recordAction('Navigated to https://localhost:8080/');
+  
+    // Set the screen size
+    await page.setViewport({ width: 1080, height: 1024 });
+    recordAction('Viewport set to width 1080 and height 1024.');
 
   // Wait for the "Log in" button to be present
   await page.waitForSelector('div[role="presentation"]');

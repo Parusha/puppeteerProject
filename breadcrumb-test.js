@@ -8,7 +8,7 @@ import puppeteer from 'puppeteer';
   // Set the viewport size to a desktop resolution
   await page.setViewport({ width: 1920, height: 1080 });
   // Set the viewport size to a mobile resolution
-  await page.setViewport({ width: 1080, height: 1024 });
+//   await page.setViewport({ width: 1080, height: 1024 });
 
   // Navigate to the webpage you want to test
   await page.goto('https://new.hollywoodbets.net/', { waitUntil: 'networkidle2' });
